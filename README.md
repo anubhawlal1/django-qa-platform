@@ -8,6 +8,30 @@ A Django-based Question & Answer platform similar to Stack Overflow or Quora whe
 - **Assignment Type**: Technical Assessment
 - **Submission Date**: [Current Date]
 
+## Comments/Additional Information
+1. **Focus on Functionality**: As per the assignment requirements, the primary focus was on implementing core functionality rather than UI elegance. However, basic Bootstrap styling has been added for better user experience.
+
+2. **Django Forms Usage**: Implemented Django Forms throughout the application:
+   - UserRegistrationForm for user signup
+   - QuestionForm for creating questions
+   - AnswerForm for submitting answers
+
+3. **Authentication Flow**: 
+   - Implemented secure user authentication
+   - Added real-time password validation
+   - Protected routes for authenticated users
+
+4. **Database Design**:
+   - Used Django's built-in User model
+   - Created models for Questions and Answers
+   - Implemented ManyToMany relationship for likes
+
+5. **Testing**:
+   - Tested all core functionalities
+   - Verified user authentication flows
+   - Validated form submissions
+   - Tested like functionality
+
 ### Assignment Requirements and Implementation Status
 
 | Requirement | Status | Implementation Details |
