@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register - Q&A Platform{% endblock %}
+
+{% block extra_head %}
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h1 class="mb-4">Create an Account</h1>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" novalidate autocomplete="off">
+                    {% csrf_token %}
+                    {% if request.GET.next %}
+                        <input type="hidden" name="next" value="{{ request.GET.next }}">
+                    {% endif %}
+                    
+                    {% if form.errors and not form.non_field_errors %}
+                        {# Skip showing errors here as they will be shown with their respective fields #}
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">{{ form.username.help_text|default:"Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only." }}</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if form.email.help_text %}
+                            <div class="form-text">{{ form.email.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.password1.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="password-requirements mt-2">
+                            <p class="mb-1">Password must contain:</p>
+                            <ul class="list-unstyled">
+                                <li id="length" class="text-danger"><i class="fas fa-times"></i> At least 8 characters</li>
+                                <li id="letter" class="text-danger"><i class="fas fa-times"></i> At least one letter</li>
+                                <li id="capital" class="text-danger"><i class="fas fa-times"></i> At least one capital letter</li>
+                                <li id="number" class="text-danger"><i class="fas fa-times"></i> At least one number</li>
+                                <li id="special" class="text-danger"><i class="fas fa-times"></i> At least one special character</li>
+                                <li id="username-similarity" class="text-danger"><i class="fas fa-times"></i> Not too similar to username</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.password2.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div id="password-match-message" class="form-text mt-1"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <hr>
+                <p>Already have an account? <a href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    .password-requirements li {
+        margin-bottom: 5px;
+    }
+    .password-requirements li.valid {
+        color: green;
+    }
+    .password-requirements li.valid i {
+        color: green;
+    }
+    .password-requirements li i {
+        margin-right: 5px;
+    }
+</style>
+
+<script>
+    function checkPasswordStrength() {
+        const password = document.getElementById('password1').value;
+        const username = document.getElementById('id_username').value;
+        
+        // Check length
+        if (password.length >= 8) {
+            document.getElementById('length').classList.add('valid');
+            document.getElementById('length').classList.remove('text-danger');
+            document.getElementById('length').querySelector('i').classList.remove('fa-times');
+            document.getElementById('length').querySelector('i').classList.add('fa-check');
+        } else {
+            document.getElementById('length').classList.remove('valid');
+            document.getElementById('length').classList.add('text-danger');
+            document.getElementById('length').querySelector('i').classList.remove('fa-check');
+            document.getElementById('length').querySelector('i').classList.add('fa-times');
+        }
+        
+        // Check for letter
+        if (/[a-z]/.test(password)) {
+            document.getElementById('letter').classList.add('valid');
+            document.getElementById('letter').classList.remove('text-danger');
+            document.getElementById('letter').querySelector('i').classList.remove('fa-times');
+            document.getElementById('letter').querySelector('i').classList.add('fa-check');
+        } else {
+            document.getElementById('letter').classList.remove('valid');
+            document.getElementById('letter').classList.add('text-danger');
+            document.getElementById('letter').querySelector('i').classList.remove('fa-check');
+            document.getElementById('letter').querySelector('i').classList.add('fa-times');
+        }
+        
+        // Check for capital letter
+        if (/[A-Z]/.test(password)) {
+            document.getElementById('capital').classList.add('valid');
+            document.getElementById('capital').classList.remove('text-danger');
+            document.getElementById('capital').querySelector('i').classList.remove('fa-times');
+            document.getElementById('capital').querySelector('i').classList.add('fa-check');
+        } else {
+            document.getElementById('capital').classList.remove('valid');
+            document.getElementById('capital').classList.add('text-danger');
+            document.getElementById('capital').querySelector('i').classList.remove('fa-check');
+            document.getElementById('capital').querySelector('i').classList.add('fa-times');
+        }
+        
+        // Check for number
+        if (/[0-9]/.test(password)) {
+            document.getElementById('number').classList.add('valid');
+            document.getElementById('number').classList.remove('text-danger');
+            document.getElementById('number').querySelector('i').classList.remove('fa-times');
+            document.getElementById('number').querySelector('i').classList.add('fa-check');
+        } else {
+            document.getElementById('number').classList.remove('valid');
+            document.getElementById('number').classList.add('text-danger');
+            document.getElementById('number').querySelector('i').classList.remove('fa-check');
+            document.getElementById('number').querySelector('i').classList.add('fa-times');
+        }
+        
+        // Check for special character
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            document.getElementById('special').classList.add('valid');
+            document.getElementById('special').classList.remove('text-danger');
+            document.getElementById('special').querySelector('i').classList.remove('fa-times');
+            document.getElementById('special').querySelector('i').classList.add('fa-check');
+        } else {
+            document.getElementById('special').classList.remove('valid');
+            document.getElementById('special').classList.add('text-danger');
+            document.getElementById('special').querySelector('i').classList.remove('fa-check');
+            document.getElementById('special').querySelector('i').classList.add('fa-times');
+        }
+        
+        // Check if password is too similar to username
+        if (username && password && username.length > 0 && 
+            (password.toLowerCase().includes(username.toLowerCase()) || 
+             username.toLowerCase().includes(password.toLowerCase()))) {
+            document.getElementById('username-similarity').classList.remove('valid');
+            document.getElementById('username-similarity').classList.add('text-danger');
+            document.getElementById('username-similarity').querySelector('i').classList.remove('fa-check');
+            document.getElementById('username-similarity').querySelector('i').classList.add('fa-times');
+        } else {
+            document.getElementById('username-similarity').classList.add('valid');
+            document.getElementById('username-similarity').classList.remove('text-danger');
+            document.getElementById('username-similarity').querySelector('i').classList.remove('fa-times');
+            document.getElementById('username-similarity').querySelector('i').classList.add('fa-check');
+        }
+        
+        // Check password match
+        checkPasswordMatch();
+    }
+    
+    // Add event listener to username field to check password when username changes
+    document.addEventListener('DOMContentLoaded', function() {
+        const usernameField = document.getElementById('id_username');
+        if (usernameField) {
+            usernameField.addEventListener('input', checkPasswordStrength);
+        }
+    });
+    
+    function checkPasswordMatch() {
+        const password1 = document.getElementById('password1').value;
+        const password2 = document.getElementById('password2').value;
+        const matchMessage = document.getElementById('password-match-message');
+        
+        if (password2 === '') {
+            matchMessage.textContent = '';
+            matchMessage.className = 'form-text mt-1';
+        } else if (password1 === password2) {
+            matchMessage.textContent = 'Passwords match!';
+            matchMessage.className = 'form-text text-success mt-1';
+        } else {
+            matchMessage.textContent = 'Passwords do not match!';
+            matchMessage.className = 'form-text text-danger mt-1';
+        }
+    }
+</script>
+{% endblock %} 

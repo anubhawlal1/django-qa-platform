@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Logged Out - Q&A Platform{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h1 class="card-title mb-4">You've Been Logged Out</h1>
+                <p class="card-text">Thank you for using our Q&A Platform. You have been successfully logged out.</p>
+                <a href="{% url 'login' %}" class="btn btn-primary">Log In Again</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
