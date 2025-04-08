@@ -2,6 +2,47 @@
 
 A Django-based Question & Answer platform similar to Stack Overflow or Quora where users can ask questions, provide answers, and interact with the community.
 
+## Assignment Information
+- **Company**: TransportSimple
+- **Position**: Django Developer
+- **Assignment Type**: Technical Assessment
+- **Submission Date**: [Current Date]
+
+### Assignment Requirements and Implementation Status
+
+| Requirement | Status | Implementation Details |
+|------------|--------|------------------------|
+| User Login/Registration | ✅ Completed | - Custom user registration with validation<br>- Secure authentication system<br>- Login/Logout functionality |
+| Post Questions | ✅ Completed | - Question creation for authenticated users<br>- Title and content fields<br>- Author tracking |
+| View Questions | ✅ Completed | - Homepage displays all questions<br>- Detailed view for each question<br>- Content preview on listing |
+| Answer Questions | ✅ Completed | - Answer form on question detail page<br>- Author attribution<br>- Timestamp tracking |
+| Like Answers | ✅ Completed | - Like/Unlike functionality<br>- Real-time like count updates<br>- User-specific like tracking |
+| Logout Function | ✅ Completed | - Secure logout mechanism<br>- Session handling<br>- Redirect to home |
+
+### Technical Stack Used
+- **Framework**: Django 4.x
+- **Frontend**: Bootstrap 5
+- **Database**: SQLite
+- **Additional**: Font Awesome, Django Crispy Forms
+
+### Project Overview
+This Q&A platform demonstrates the implementation of:
+- Full-stack web development using Django framework
+- User authentication and authorization
+- Database modeling and relationships
+- CRUD operations
+- Real-time client-side validation
+- Responsive UI design
+- Security best practices
+
+### Technical Implementation Highlights
+- Custom user registration with advanced password validation
+- Real-time form validation using JavaScript
+- Secure session handling and CSRF protection
+- Bootstrap 5 for responsive design
+- Font Awesome integration for improved UX
+- SQLite database with Django ORM
+
 ## Features
 
 ### User Authentication
